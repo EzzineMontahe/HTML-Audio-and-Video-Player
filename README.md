@@ -71,19 +71,6 @@ css
 --pastel-mint: #c1f0c1;
 --pastel-peach: #ffdab9;
 --pastel-blue: #b5d8ff;
-🔧 Installation & Usage
-Clone the repository
-
-bash
-git clone https://github.com/yourusername/pastel-media-player.git
-Open in browser
-
-bash
-cd pastel-media-player
-# Open index.html in your preferred browser
-Or use directly
-
-Simply download the index.html file and open it in any modern web browser
 
 🌟 Customization
 Want to change the colors or add your own media? It's easy!
@@ -100,43 +87,11 @@ css
 Add Your Media:
 Replace the src attributes in the video and audio elements with your own file URLs.
 
-📱 Browser Support
-Chrome ✅
-
-Firefox ✅
-
-Safari ✅
-
-Edge ✅
-
-Mobile browsers ✅
-
 🤝 Contributing
 Feel free to fork this project and submit pull requests! Some ideas for improvements:
-
 Add more playlist functionality
-
 Implement custom media controls
-
 Add volume controls
-
 Create a dark mode version
-
-📄 License
 This project is open source and available under the MIT License.
-
-🎊 Perfect For
-Personal portfolios
-
-Art and music projects
-
-Learning web development
-
-UI/UX design examples
-
-Creative coding demonstrations
-
-Made with 💖 by [Your Name]
-
-If you like this project, don't forget to give it a ⭐!
 
