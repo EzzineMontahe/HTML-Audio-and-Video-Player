@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastel Media Player</title>
+    <style>
+        :root {
+            --pastel-pink: #ffd1dc;
+            --pastel-lavender: #e6e6fa;
+            --pastel-mint: #c1f0c1;
+            --pastel-peach: #ffdab9;
+            --pastel-blue: #b5d8ff;
+            --soft-gray: #f8f8f8;
+            --text-dark: #5a5a5a;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--pastel-lavender), var(--pastel-blue));
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            color: #7a6f8b;
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--pastel-pink), var(--pastel-mint), var(--pastel-peach));
+        }
+        
+        h2 {
+            color: #7a6f8b;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        h2::before {
+            content: '🎬';
+            font-size: 1.5rem;
+        }
+        
+        .audio-section h2::before {
+            content: '🎵';
+        }
+        
+        .media-container {
+            display: flex;
+            justify-content: center;
+            background: var(--soft-gray);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        video {
+            width: 640px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        audio {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        /* Custom audio player styling */
+        audio::-webkit-media-controls-panel {
+            background: linear-gradient(to right, var(--pastel-pink), var(--pastel-peach));
+            border-radius: 10px;
+        }
+        
+        audio::-webkit-media-controls-play-button,
+        audio::-webkit-media-controls-mute-button {
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        .media-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0 0.5rem;
+        }
+        
+        .file-info {
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .duration {
+            font-size: 0.9rem;
+            color: #7a6f8b;
+            font-weight: 500;
+        }
+        
+        .playlist {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--soft-gray);
+            border-radius: 15px;
+        }
+        
+        .playlist h3 {
+            color: #7a6f8b;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .playlist-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .playlist-item {
+            background: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .playlist-item:hover {
+            background: var(--pastel-mint);
+            transform: translateY(-2px);
+        }
+        
+        .playlist-item.active {
+            background: var(--pastel-pink);
+            border-color: var(--pastel-peach);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .playlist-items {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="title">Pastel Media Player</h1>
+            <p class="subtitle">Enjoy your favorite videos and music in style</p>
+        </header>
+        
+        <section class="video-section">
+            <h2>Understanding the Map Method</h2>
+            <div class="media-container">
+                <video width="640" controls>
+                    <source src="https://cdn.freecodecamp.org/curriculum/labs/what-is-the-map-method-and-how-does-it-work.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="media-info">
+                <span class="file-info">MP4 Video • JavaScript Tutorial</span>
+                <span class="duration">Duration: 2:45</span>
+            </div>
+        </section>
+        
+        <section class="audio-section">
+            <h2>Sailing Away</h2>
+            <div class="media-container">
+                <audio controls loop>
+                    <source src="https://cdn.freecodecamp.org/curriculum/js-music-player/sailing-away.mp3" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            <div class="media-info">
+                <span class="file-info">MP3 Audio • Relaxing Music</span>
+                <span class="duration">Duration: 3:22</span>
+            </div>
+            
+            <div class="playlist">
+                <h3>More Music Options</h3>
+                <div class="playlist-items">
+                    <div class="playlist-item active" data-src="https://cdn.freecodecamp.org/curriculum/js-music-player/sailing-away.mp3">
+                        🎵 Sailing Away
+                    </div>
+                    <div class="playlist-item" data-src="https://cdn.freecodecamp.org/curriculum/js-music-player/we-are-going-to-make-it.mp3">
+                        🎵 We Are Going To Make It
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Made with 💖 • Pastel Media Player © 2024</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add interactivity to the playlist
+        document.addEventListener('DOMContentLoaded', function() {
+            const playlistItems = document.querySelectorAll('.playlist-item');
+            const audioElement = document.querySelector('audio');
+            
+            playlistItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    playlistItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Get the audio source from data attribute
+                    const newSrc = this.getAttribute('data-src');
+                    
+                    // Update audio source and play
+                    audioElement.src = newSrc;
+                    audioElement.play();
+                    
+                    // Update the song title
+                    const songTitle = this.textContent.trim().replace('🎵 ', '');
+                    document.querySelector('.audio-section h2').textContent = songTitle;
+                });
+            });
+            
+            // Add some visual feedback when media is playing
+            const video = document.querySelector('video');
+            const audio = document.querySelector('audio');
+            
+            video.addEventListener('play', function() {
+                document.querySelector('.video-section').style.boxShadow = '0 12px 35px rgba(255, 209, 220, 0.3)';
+            });
+            
+            video.addEventListener('pause', function() {
+                document.querySelector('.video-section').style.boxShadow = 'var(--shadow)';
+            });
+            
+            audio.addEventListener('play', function() {
+                document.querySelector('.audio-section').style.boxShadow = '0 12px 35px rgba(193, 240, 193, 0.3)';
+            });
+            
+            audio.addEventListener('pause', function() {
+                document.querySelector('.audio-section').style.boxShadow = 'var(--shadow)';
+            });
+        });
+    </script>
+</body>
+</html>
